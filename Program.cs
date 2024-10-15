@@ -1,20 +1,40 @@
-/* using RetoTecnico.Automappers; */
+using RetoTecnico.Automappers;
 using RetoTecnico.DTOs;
 using RetoTecnico.Models;
-/* using RetoTecnico.Repository;
+using RetoTecnico.Repository;
 using RetoTecnico.Services;
-using RetoTecnico.Validators; */
+using RetoTecnico.Validators;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
+
+//Mappers
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+//Inyeccion de Repositorios
+
+builder.Services.AddScoped<IRepository<Cliente>, ClienteRepository>();
+
 // Add services to the container.
-  
+builder.Services.AddScoped<ICommonService<ClienteDto, ClienteInsertDto, ClienteUpdateDto>, ClienteService>();
+
+
+
+//Validators                      //modelo a validar  //Validador
+builder.Services.AddScoped<IValidator<ClienteInsertDto>, ClienteInsertValidator>();
+builder.Services.AddScoped<IValidator<ClienteUpdateDto>, ClienteUpdateValidator>();
+
+// Añadir controladores
+builder.Services.AddControllers(); 
+builder.Services.AddEndpointsApiExplorer();
+
 
 
 //Conexion:
 //Inyección de contexto por Entity Framework que se encarga de mapear una base de datos
-builder.Services.AddDbContext<DbContext>(options=>
+builder.Services.AddDbContext<DBContext>(options=>
 {
     //Aqui estamos usando MySQL no SQL Server
     options.UseMySql(builder.Configuration.GetConnectionString("DBConnection"),
@@ -32,7 +52,12 @@ builder.Services.AddDbContext<DbContext>(options=>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 var app = builder.Build();
+
+app.UseRouting();
+app.UseAuthorization();
+app.MapControllers(); // Asegúrate de que esto esté presente
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

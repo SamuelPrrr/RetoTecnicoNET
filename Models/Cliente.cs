@@ -11,6 +11,6 @@ namespace RetoTecnico.Models
         public string Name {get; set;}
 
         public string Email { get; set; }
-        public List<Folio> Folios { get; set; } // Relación con los empeños del cliente
+        public List<Folio>? Folios { get; set; } // Relación con los empeños del cliente
     }
 }

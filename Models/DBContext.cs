@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 namespace RetoTecnico.Models
 {
-    public class DBConnection : DbContext
+    public class DBContext : DbContext
     {
-        public DBConnection(DbContextOptions<DBConnection> options): base(options)
+        public DBContext(DbContextOptions<DBContext> options): base(options)
         {
             
         }

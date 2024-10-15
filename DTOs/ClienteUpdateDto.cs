@@ -2,7 +2,7 @@ using RetoTecnico.Models;
 
 namespace RetoTecnico.DTOs
 {
-    public class ClienteDto
+    public class ClienteUpdateDto
     {
         public int ClienteID {get; set;}
         public string Name {get; set;}
