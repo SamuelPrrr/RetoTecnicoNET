@@ -12,10 +12,25 @@ namespace RetoTecnico.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AlhajaID {get; set;}
 
+        public string FolioID { get; set; }
+
         [Column(TypeName = "decimal(18,2)")]
         public decimal PesoKG {get; set;}
+
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal MontoEmpeño {get; set;}
+
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal MontoInteres {get; set;}
+
+        public DateTime FechaOperacion {get; set;}
+
+        public DateTime FechaVencimiento {get; set;}
+
+        public DateTime? FechaLiquidacion {get; set;}
 
         [ForeignKey("ClienteID")]
         public virtual Cliente Cliente {get; set;}
     }
 }
+

@@ -14,6 +14,11 @@ namespace RetoTecnico.Automappers
         CreateMap<Cliente, ClienteDto>().ReverseMap();
         CreateMap<Cliente, ClienteInsertDto>().ReverseMap();
         CreateMap<Cliente, ClienteUpdateDto>().ReverseMap();
+
+        //Para la alhaja
+        CreateMap<Alhaja, AlhajaDto>().ReverseMap();
+        CreateMap<Alhaja, AlhajaInsertDto>().ReverseMap();
+        CreateMap<Alhaja, AlhajaUpdateDto>().ReverseMap();
         }
     }
 }

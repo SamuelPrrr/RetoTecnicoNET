@@ -16,15 +16,20 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 //Inyeccion de Repositorios
 
 builder.Services.AddScoped<IRepository<Cliente>, ClienteRepository>();
+builder.Services.AddScoped<IRepository<Alhaja>, AlhajaRepository>();
+
+
 
 // Add services to the container.
 builder.Services.AddScoped<ICommonService<ClienteDto, ClienteInsertDto, ClienteUpdateDto>, ClienteService>();
-
+builder.Services.AddScoped<ICommonService<AlhajaDto,AlhajaInsertDto,AlhajaUpdateDto>, AlhajaService>();
 
 
 //Validators                      //modelo a validar  //Validador
 builder.Services.AddScoped<IValidator<ClienteInsertDto>, ClienteInsertValidator>();
 builder.Services.AddScoped<IValidator<ClienteUpdateDto>, ClienteUpdateValidator>();
+builder.Services.AddScoped<IValidator<AlhajaInsertDto>, AlhajaInsertValidator>();
+builder.Services.AddScoped<IValidator<AlhajaUpdateDto>, AlhajaUpdateValidator>();
 
 // Añadir controladores
 builder.Services.AddControllers(); 

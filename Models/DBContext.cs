@@ -9,6 +9,6 @@ namespace RetoTecnico.Models
         }
         public DbSet<Cliente> Clientes {get; set;}
         public DbSet<Alhaja> Alhaja {get; set;}
-        public DbSet<Folio> Folios {get; set;}
+        public DbSet<Parametros> Parametros {get; set;}
     }
 }

@@ -9,8 +9,7 @@ namespace RetoTecnico.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ClienteID {get; set;}
         public string Name {get; set;}
-
         public string Email { get; set; }
-        public List<Folio>? Folios { get; set; } // Relación con los empeños del cliente
+        public List<Alhaja>? Alhajas { get; set; } // Relación con los empeños del cliente
     }
 }

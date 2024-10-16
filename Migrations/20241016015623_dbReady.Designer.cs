@@ -12,8 +12,8 @@ using RetoTecnico.Models;
 namespace RetoTecnico.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20241015190734_2DB")]
-    partial class _2DB
+    [Migration("20241016015623_dbReady")]
+    partial class dbReady
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,6 +35,25 @@ namespace RetoTecnico.Migrations
 
                     b.Property<int>("ClienteID")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("FechaLiquidacion")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("FechaOperacion")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("FechaVencimiento")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("FolioID")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<decimal>("MontoEmpeño")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("MontoInteres")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("PesoKG")
                         .HasColumnType("decimal(18,2)");
@@ -67,54 +86,35 @@ namespace RetoTecnico.Migrations
                     b.ToTable("Clientes");
                 });
 
-            modelBuilder.Entity("RetoTecnico.Models.Folio", b =>
+            modelBuilder.Entity("RetoTecnico.Models.Parametros", b =>
                 {
-                    b.Property<int>("FolioID")
+                    b.Property<int>("ParametroID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("FolioID"));
-
-                    b.Property<int>("AlhajaID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ClienteID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("FechaLiquidacion")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime>("FechaOperacion")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime>("FechaVencimiento")
-                        .HasColumnType("datetime(6)");
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ParametroID"));
 
                     b.Property<decimal>("Interes")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("MontoEmpeño")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("MontoInteres")
+                    b.Property<decimal>("MontoAcumulado")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("PrecioGramo")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("FolioID");
+                    b.Property<int>("limOperaciones")
+                        .HasColumnType("int");
 
-                    b.HasIndex("AlhajaID");
+                    b.HasKey("ParametroID");
 
-                    b.HasIndex("ClienteID");
-
-                    b.ToTable("Folios");
+                    b.ToTable("Parametros");
                 });
 
             modelBuilder.Entity("RetoTecnico.Models.Alhaja", b =>
                 {
                     b.HasOne("RetoTecnico.Models.Cliente", "Cliente")
-                        .WithMany()
+                        .WithMany("Alhajas")
                         .HasForeignKey("ClienteID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -122,24 +122,9 @@ namespace RetoTecnico.Migrations
                     b.Navigation("Cliente");
                 });
 
-            modelBuilder.Entity("RetoTecnico.Models.Folio", b =>
-                {
-                    b.HasOne("RetoTecnico.Models.Alhaja", "Alhaja")
-                        .WithMany()
-                        .HasForeignKey("AlhajaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RetoTecnico.Models.Cliente", null)
-                        .WithMany("Folios")
-                        .HasForeignKey("ClienteID");
-
-                    b.Navigation("Alhaja");
-                });
-
             modelBuilder.Entity("RetoTecnico.Models.Cliente", b =>
                 {
-                    b.Navigation("Folios");
+                    b.Navigation("Alhajas");
                 });
 #pragma warning restore 612, 618
         }

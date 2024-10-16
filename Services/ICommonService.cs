@@ -12,5 +12,7 @@ namespace RetoTecnico.Services
          public Task<T> Add(TI insertDto);
          public Task<T> Update(int id, TU updateDto);
          public Task<T> Delete(int id);
+         bool Validate(TI dto);
+         bool Validate(TU dto);
     }
 }

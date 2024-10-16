@@ -77,5 +77,15 @@ namespace RetoTecnico.Services
             }
             return null;
          }
+
+         public bool Validate(ClienteInsertDto clienteInsertDto)
+         {
+            return false;
+         }
+
+         public bool Validate(ClienteUpdateDto clienteUpdateDto)
+        {
+            return true;
+        }
     }
 }
