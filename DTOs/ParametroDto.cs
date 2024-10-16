@@ -1,6 +1,6 @@
 namespace RetoTecnico.DTOs
 {
-    public class Parametros
+    public class ParametroDto
     {
         public int ParametroID {get; set;}
         public decimal PrecioGramo {get; set;}

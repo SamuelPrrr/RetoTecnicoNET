@@ -46,7 +46,7 @@ namespace RetoTecnico.Controllers
 
                 return AlhajaDto == null ? NotFound() : Ok(AlhajaDto);
             }
-
+ 
             [HttpPost("{id}")]
             public async Task<ActionResult<AlhajaDto>> Add(AlhajaInsertDto alhajaInsertDto, int id)
             {

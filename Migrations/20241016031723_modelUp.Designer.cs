@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RetoTecnico.Models;
 
@@ -11,9 +12,11 @@ using RetoTecnico.Models;
 namespace RetoTecnico.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20241016031723_modelUp")]
+    partial class modelUp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,9 +48,6 @@ namespace RetoTecnico.Migrations
                     b.Property<string>("FolioID")
                         .IsRequired()
                         .HasColumnType("longtext");
-
-                    b.Property<decimal>("MontoDeuda")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("MontoEmpeño")
                         .HasColumnType("decimal(18,2)");

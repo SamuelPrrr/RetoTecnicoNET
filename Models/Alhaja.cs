@@ -18,15 +18,21 @@ namespace RetoTecnico.Models
         public decimal PesoKG {get; set;}
 
         [Column(TypeName = "decimal(18,2)")]
+        public decimal PreOroMomento {get; set;}
+
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal PorInteresMomento{get; set;}
+
+        [Column(TypeName = "decimal(18,2)")]
         public decimal MontoEmpeño {get; set;}
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal MontoInteres {get; set;}
-
+        
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal MontoDeuda {get; set;}
         public DateTime FechaOperacion {get; set;}
-
         public DateTime FechaVencimiento {get; set;}
-
         public DateTime? FechaLiquidacion {get; set;}
 
         [ForeignKey("ClienteID")]

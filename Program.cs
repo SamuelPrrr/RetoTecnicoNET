@@ -17,12 +17,16 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddScoped<IRepository<Cliente>, ClienteRepository>();
 builder.Services.AddScoped<IRepository<Alhaja>, AlhajaRepository>();
+builder.Services.AddScoped<IRepository<Parametros>, ParametrosRepository>();
+
+
 
 
 
 // Add services to the container.
 builder.Services.AddScoped<ICommonService<ClienteDto, ClienteInsertDto, ClienteUpdateDto>, ClienteService>();
 builder.Services.AddScoped<ICommonService<AlhajaDto,AlhajaInsertDto,AlhajaUpdateDto>, AlhajaService>();
+builder.Services.AddScoped<ICommonService<ParametroDto,ParametroInsertDto,ParametroUpdateDto>, ParametroService>();
 
 
 //Validators                      //modelo a validar  //Validador
@@ -30,6 +34,8 @@ builder.Services.AddScoped<IValidator<ClienteInsertDto>, ClienteInsertValidator>
 builder.Services.AddScoped<IValidator<ClienteUpdateDto>, ClienteUpdateValidator>();
 builder.Services.AddScoped<IValidator<AlhajaInsertDto>, AlhajaInsertValidator>();
 builder.Services.AddScoped<IValidator<AlhajaUpdateDto>, AlhajaUpdateValidator>();
+builder.Services.AddScoped<IValidator<ParametroInsertDto>, ParametrosInsertValidator>();
+builder.Services.AddScoped<IValidator<ParametroUpdateDto>, ParametrosUpdateValidator>();
 
 // Añadir controladores
 builder.Services.AddControllers(); 
@@ -46,11 +52,6 @@ builder.Services.AddDbContext<DBContext>(options=>
     // se utiliza para detectar automáticamente la versión del servidor MySQL al que te estás conectando, lo cual es útil para que el proveedor de Entity Framework Core pueda optimizar la configuración de la conexión y el comportamiento de las operaciones de base de datos.
     ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DBConnection")));
 });
-
-
-
-
-
 
 //Codigo fundamental
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

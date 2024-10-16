@@ -11,11 +11,13 @@ namespace RetoTecnico.Services
     public class AlhajaService : ICommonService<AlhajaDto, AlhajaInsertDto, AlhajaUpdateDto>
     {
         private IRepository<Alhaja> _alhajaRepository;
+        private IRepository<Parametros> _parametroRepository;
 
          private IMapper _mapper;
         public List<string> Errors {get;}
-        public AlhajaService(IRepository<Alhaja> alhajaRepository, IMapper mapper, IRepository<Cliente> clienteRepository){
+        public AlhajaService(IRepository<Alhaja> alhajaRepository, IMapper mapper, IRepository<Parametros> parametroRepository){
             _alhajaRepository = alhajaRepository;
+            _parametroRepository = parametroRepository;
             _mapper = mapper;
             Errors = new List<string>();
         }
@@ -40,18 +42,14 @@ namespace RetoTecnico.Services
 
          public async Task<AlhajaDto> Add(AlhajaInsertDto alhajaInsertDto){
                 var alhaja = _mapper.Map<Alhaja>(alhajaInsertDto);
-
-                // Asignar valores calculados
-                /* alhaja.PrecioGramo = parametros.PrecioOroGramo;
-                alhaja.Interes = parametros.PorcentajeInteres;
-                alhaja.MontoEmpeño = alhaja.PesoKG * alhaja.PrecioGramo;
-                alhaja.MontoInteres = alhaja.MontoEmpeño * (alhaja.Interes / 100);
+                var parametros = await _parametroRepository.GetById(1);
+                alhaja.PreOroMomento = parametros.PrecioGramo;
+                alhaja.PorInteresMomento = parametros.Interes;
+                alhaja.MontoEmpeño = alhaja.PesoKG * alhaja.PreOroMomento;
+                alhaja.MontoInteres = alhaja.MontoEmpeño * (alhaja.PorInteresMomento / 100);
                 alhaja.MontoDeuda = alhaja.MontoEmpeño + alhaja.MontoInteres;
-
-                // Fecha de operación y vencimiento
                 alhaja.FechaOperacion = DateTime.Now;
-                alhaja.FechaVencimiento = alhaja.FechaOperacion.AddMonths(1); */
-
+                alhaja.FechaVencimiento = alhaja.FechaOperacion.AddMonths(1);
                 await _alhajaRepository.Add(alhaja);
                 await _alhajaRepository.Save();
                 var alhajaDto = _mapper.Map<AlhajaDto>(alhaja);

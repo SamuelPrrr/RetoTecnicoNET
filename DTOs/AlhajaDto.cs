@@ -15,6 +15,8 @@ namespace RetoTecnico.DTOs
 
         public decimal MontoInteres {get; set;}
 
+        public decimal MontoDeuda {get; set;}
+
         public DateTime FechaOperacion {get; set;}
 
         public DateTime FechaVencimiento {get; set;}
