@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RetoTecnico.Models;
 
@@ -11,9 +12,11 @@ using RetoTecnico.Models;
 namespace RetoTecnico.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20241016143326_estatusInicial")]
+    partial class estatusInicial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,6 +34,9 @@ namespace RetoTecnico.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("AlhajaID"));
 
                     b.Property<int>("ClienteID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EstatusIdEstatus")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("FechaLiquidacion")
@@ -71,7 +77,7 @@ namespace RetoTecnico.Migrations
 
                     b.HasIndex("ClienteID");
 
-                    b.HasIndex("IdEstatus");
+                    b.HasIndex("EstatusIdEstatus");
 
                     b.ToTable("Alhaja");
                 });
@@ -149,7 +155,7 @@ namespace RetoTecnico.Migrations
 
                     b.HasOne("RetoTecnico.Models.Estatus", "Estatus")
                         .WithMany()
-                        .HasForeignKey("IdEstatus")
+                        .HasForeignKey("EstatusIdEstatus")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -20,16 +20,16 @@ namespace RetoTecnico.Controllers
         private IRepository<Cliente> _clienteRepository;
          private ICommonService<AlhajaDto,AlhajaInsertDto,AlhajaUpdateDto> _alhajaService;
          //Validador
-         private IValidator<AlhajaInsertDto> _alhajaInsertDto;
+         private IValidator<AlhajaInsertDto> _alhajaInsertValidator;
 
-         private IValidator<AlhajaUpdateDto> _alhajaUpdateDto;
+         private IValidator<AlhajaUpdateDto> _alhajaUpdateValidator;
          
          public AlhajaController
-         (IValidator<AlhajaInsertDto> clienteInsertValidator, IValidator<AlhajaUpdateDto> AlhajaUpdateDto,
+         (IValidator<AlhajaInsertDto> clienteInsertValidator, IValidator<AlhajaUpdateDto> AlhajaUpdateValidator,
             ICommonService<AlhajaDto, AlhajaInsertDto, AlhajaUpdateDto> clienteService, IRepository<Cliente> clienteRepository)
          {
-            _alhajaInsertDto = clienteInsertValidator;
-            _alhajaUpdateDto = AlhajaUpdateDto;
+            _alhajaInsertValidator = clienteInsertValidator;
+            _alhajaUpdateValidator = AlhajaUpdateValidator;
             _alhajaService = clienteService;
             _clienteRepository = clienteRepository;
          }
@@ -51,7 +51,7 @@ namespace RetoTecnico.Controllers
             public async Task<ActionResult<AlhajaDto>> Add(AlhajaInsertDto alhajaInsertDto, int id)
             {
                 //Validacion inyectada
-                var validationResult = await _alhajaInsertDto.ValidateAsync(alhajaInsertDto);
+                var validationResult = await _alhajaInsertValidator.ValidateAsync(alhajaInsertDto);
 
                 var existClient = await _clienteRepository.GetById(id);
     
@@ -87,7 +87,7 @@ namespace RetoTecnico.Controllers
             public async Task<ActionResult<AlhajaDto>> Update(int id, AlhajaUpdateDto AlhajaUpdateDto)
             {
 
-                var validationResult = await _alhajaUpdateDto.ValidateAsync(AlhajaUpdateDto);
+                var validationResult = await _alhajaUpdateValidator.ValidateAsync(AlhajaUpdateDto);
                 if(!validationResult.IsValid){
                     return BadRequest(validationResult.Errors);
                 }

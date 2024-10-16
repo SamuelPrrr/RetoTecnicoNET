@@ -12,8 +12,8 @@ using RetoTecnico.Models;
 namespace RetoTecnico.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20241016015623_dbReady")]
-    partial class dbReady
+    [Migration("20241016144159_some2")]
+    partial class some2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,6 +36,9 @@ namespace RetoTecnico.Migrations
                     b.Property<int>("ClienteID")
                         .HasColumnType("int");
 
+                    b.Property<int>("EstatusIdEstatus")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("FechaLiquidacion")
                         .HasColumnType("datetime(6)");
 
@@ -49,6 +52,12 @@ namespace RetoTecnico.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<int>("IdEstatus")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("MontoDeuda")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<decimal>("MontoEmpeño")
                         .HasColumnType("decimal(18,2)");
 
@@ -58,9 +67,17 @@ namespace RetoTecnico.Migrations
                     b.Property<decimal>("PesoKG")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<decimal>("PorInteresMomento")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("PreOroMomento")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("AlhajaID");
 
                     b.HasIndex("ClienteID");
+
+                    b.HasIndex("EstatusIdEstatus");
 
                     b.ToTable("Alhaja");
                 });
@@ -84,6 +101,23 @@ namespace RetoTecnico.Migrations
                     b.HasKey("ClienteID");
 
                     b.ToTable("Clientes");
+                });
+
+            modelBuilder.Entity("RetoTecnico.Models.Estatus", b =>
+                {
+                    b.Property<int>("IdEstatus")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdEstatus"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("IdEstatus");
+
+                    b.ToTable("Estatus");
                 });
 
             modelBuilder.Entity("RetoTecnico.Models.Parametros", b =>
@@ -119,7 +153,15 @@ namespace RetoTecnico.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("RetoTecnico.Models.Estatus", "Estatus")
+                        .WithMany()
+                        .HasForeignKey("EstatusIdEstatus")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Cliente");
+
+                    b.Navigation("Estatus");
                 });
 
             modelBuilder.Entity("RetoTecnico.Models.Cliente", b =>

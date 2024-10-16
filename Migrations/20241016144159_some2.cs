@@ -5,7 +5,7 @@
 namespace RetoTecnico.Migrations
 {
     /// <inheritdoc />
-    public partial class atributoFaltante : Migration
+    public partial class some2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

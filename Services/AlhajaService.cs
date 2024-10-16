@@ -50,6 +50,7 @@ namespace RetoTecnico.Services
                 alhaja.MontoDeuda = alhaja.MontoEmpeño + alhaja.MontoInteres;
                 alhaja.FechaOperacion = DateTime.Now;
                 alhaja.FechaVencimiento = alhaja.FechaOperacion.AddMonths(1);
+                alhaja.IdEstatus = alhajaInsertDto.IdEstatus = 1;
                 await _alhajaRepository.Add(alhaja);
                 await _alhajaRepository.Save();
                 var alhajaDto = _mapper.Map<AlhajaDto>(alhaja);

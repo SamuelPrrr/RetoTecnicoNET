@@ -22,5 +22,7 @@ namespace RetoTecnico.DTOs
         public DateTime FechaVencimiento {get; set;}
 
         public DateTime? FechaLiquidacion {get; set;}
+
+        public int IdEstatus {get; set;}
     }
 }

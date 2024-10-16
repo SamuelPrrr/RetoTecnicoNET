@@ -7,6 +7,7 @@ namespace RetoTecnico.Models
     {
         //Hereda de Cliente
         public int ClienteID {get; set;}
+        public int IdEstatus { get; set; }
         
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -34,6 +35,9 @@ namespace RetoTecnico.Models
         public DateTime FechaOperacion {get; set;}
         public DateTime FechaVencimiento {get; set;}
         public DateTime? FechaLiquidacion {get; set;}
+
+        [ForeignKey("IdEstatus")]
+        public virtual Estatus Estatus { get; set; } 
 
         [ForeignKey("ClienteID")]
         public virtual Cliente Cliente {get; set;}
