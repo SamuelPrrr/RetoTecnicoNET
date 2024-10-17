@@ -88,8 +88,15 @@ namespace RetoTecnico.Controllers
             {
 
                 var validationResult = await _alhajaUpdateValidator.ValidateAsync(AlhajaUpdateDto);
+
+                //Validadores(MAs que nada de tipo y restricciones basicas de la base de datos)
                 if(!validationResult.IsValid){
                     return BadRequest(validationResult.Errors);
+                } 
+
+                if(!_alhajaService.Validate(AlhajaUpdateDto))
+                {
+                    return BadRequest(_alhajaService.Errors);
                 }
 
                 var AlhajaDto = await _alhajaService.Update(id, AlhajaUpdateDto);

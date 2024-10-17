@@ -93,13 +93,72 @@ namespace RetoTecnico.Services
 
         public bool Validate(AlhajaInsertDto alhajaInsertDto)
         {
+            
             return true;
         }
 
         public bool Validate(AlhajaUpdateDto alhajaUpdateDto)
         {
+             // Buscar todas las alhajas que coincidan con la regla de negocio que necesitas
+            var alhaja = _alhajaRepository.Search(a => a.AlhajaID == alhajaUpdateDto.AlhajaID).FirstOrDefault();
+
+            // Si no se encuentra la alhaja, consideramos que no es válida
+            if (alhaja == null)
+            {
+                Errors.Add("El empeño no existe no existe");
+                return false;
+            }
+
+            var fechaLiquidacionValida = FechaLiquidacionEsValida(alhaja.FechaVencimiento, alhajaUpdateDto.FechaLiquidacion, alhajaUpdateDto.IdEstatus);
+            if(!fechaLiquidacionValida)
+            {
+                Errors.Add("El empeño ha superado su fecha de vencimiento o ya ha sido cancelado y no puede ser liquidado.");
+                return false;
+            }
+
+            var fechaCancelacionValida = FechaCancelacionEsValida(alhaja.FechaOperacion, alhajaUpdateDto.FechaLiquidacion, alhajaUpdateDto.IdEstatus);
+            if(!fechaCancelacionValida)
+            {
+                Errors.Add("El empeño solo puede ser cancelado el mismo día de la operación.");
+                return false;
+            }
+
             return true;
         }
+
+        private bool FechaLiquidacionEsValida(DateTime? fechaVencimiento, DateTime? fechaLiquidacion, int estatusId)
+        {
+        // Si el estatus es "Activo" (2)
+        if (estatusId == 2)
+        {
+            // Verificar que no esté liquidado (3) ni cancelado (4), y que la fecha de liquidación sea válida
+            return estatusId != 3 /* liquidado */ 
+            && estatusId != 4 /* cancelado */ 
+            && fechaLiquidacion.HasValue
+            && fechaLiquidacion.Value <= fechaVencimiento;
+        }
+        return true; // Si no es "activo", no se aplica ninguna regla específica
+        }
+
+        private bool FechaCancelacionEsValida(DateTime? fechaOperacion, DateTime? fechaLiquidacion, int estatusId)
+        {
+            // Si el estatus es "cancelado", permitir solo si la cancelación ocurre el mismo día de la operación.
+        if (estatusId == 4) // 4 significa "cancelado"
+        {
+            return fechaLiquidacion.Value.Date == fechaOperacion.Value.Date;
+        };
+        return true;
+        }
+
+
+        
+
+
+
+
+
+
+
 
     }
 }
