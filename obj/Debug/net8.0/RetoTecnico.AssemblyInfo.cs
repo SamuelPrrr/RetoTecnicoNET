@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RetoTecnico")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6e0d99a9f36ed7e8334f23a42d63f3abeb74faef")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8d4cd20603061a66bb63e712044534a80a656064")]
 [assembly: System.Reflection.AssemblyProductAttribute("RetoTecnico")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RetoTecnico")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

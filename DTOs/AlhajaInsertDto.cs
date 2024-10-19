@@ -4,8 +4,8 @@ namespace RetoTecnico.DTOs
     {
         public int ClienteID {get; set;}
         public decimal PesoKG {get; set;}
-        public string FolioID { get; set; }
-         public decimal PreOroMomento {get; set;}
+        public string? FolioID { get; set; }
+        public decimal PreOroMomento {get; set;}
         public decimal PorInteresMomento{get; set;}
         public decimal MontoEmpeño {get; set;}
         public decimal MontoInteres {get; set;}

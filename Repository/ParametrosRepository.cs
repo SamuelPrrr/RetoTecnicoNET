@@ -25,7 +25,7 @@ namespace RetoTecnico.Repository
             => await _context.Parametros.AddAsync(Parametros);
         public void Update(Parametros Parametros)
         {
-            //attach adjunta la entidad a tuc ontexto pero cuando ya existe
+            //attach adjunta la entidad a tu  contexto pero cuando ya existe
             _context.Parametros.Attach(Parametros);
             _context.Parametros.Entry(Parametros).State = EntityState.Modified;
         }

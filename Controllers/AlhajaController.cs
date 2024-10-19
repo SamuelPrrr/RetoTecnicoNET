@@ -73,9 +73,9 @@ namespace RetoTecnico.Controllers
                 }
 
                 //En un momento añado las validaciones
-                if(_alhajaService.Validate(alhajaInsertDto))
+                if(!_alhajaService.Validate(alhajaInsertDto))
                 {
-                    
+                    return BadRequest(_alhajaService.Errors);
                 }
 
                 var alhajaDto = await _alhajaService.Add(alhajaInsertDto);
